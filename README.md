@@ -1,5 +1,8 @@
 # Udagram Image Filtering Microservice
 
+[![Build Status](https://travis-ci.com/scaydogdu/udacity03.svg?branch=master)](https://travis-ci.com/scaydogdu/udacity03)
+
+
 Udagram is a simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree. It allows users to register and log into a web client, post photos to the feed, and process photos using an image filtering microservice.
 
 The project is split into three parts:
@@ -51,3 +54,28 @@ Ionic CLI can build the frontend into static HTML/CSS/JavaScript files. These fi
 ionic build
 ```
 ***
+### Setup Docker Environment
+You'll need to install docker https://docs.docker.com/install/. Open a new terminal within the **udacity-c3-deployment/docker** directory and run:
+
+1. Build the images: `docker-compose -f docker-compose-build.yaml build --parallel`
+2. Push the images: `docker-compose -f docker-compose-build.yaml push`
+3. Run the container: `docker-compose up`
+
+***
+### Deploy on Kubernetes
+Be sure to install Docker Desktop. It includes a standalone Kubernetes server and client, as well as Docker CLI integration.
+
+1. Navigate to the  **udacity-c3-deployment/k8s** directory
+2. Set AWS credentials and configs
+3. Run:
+
+kubectl apply -f backend-feed-service.yaml &&
+kubectl apply -f backend-user-service.yaml &&
+kubectl apply -f frontend-service.yaml &&
+kubectl apply -f env-configmap.yaml &&
+kubectl apply -f env-secret.yaml &&
+kubectl apply -f backend-feed-deployment.yaml &&
+kubectl apply -f backend-user-deployment.yaml &&
+kubectl apply -f frontend-deployment.yaml &&
+kubectl apply -f reverseproxy-service.yaml &&
+kubectl apply -f reverseproxy-deployment.yaml
